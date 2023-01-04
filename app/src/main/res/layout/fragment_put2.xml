@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PutFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+
+        <EditText
+            android:layout_marginTop="16dp"
+
+            android:id="@+id/name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="name"
+            android:text="Jack Vorobey">
+
+        </EditText>
+
+        <EditText
+            android:layout_marginTop="16dp"
+
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="email"
+            android:inputType="textEmailAddress"
+            android:text="test@mail.ru">
+
+        </EditText>
+
+        <EditText
+            android:layout_marginTop="16dp"
+
+            android:id="@+id/gender_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="gender"
+            android:inputType="textEmailAddress"
+            android:text="female">
+
+        </EditText>
+
+        <EditText
+            android:layout_marginTop="16dp"
+            android:id="@+id/status_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="status"
+            android:inputType="textEmailAddress"
+            android:text="active">
+
+        </EditText>
+
+        <Button
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить"
+            android:layout_gravity="center"
+            android:id="@+id/post_data"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/result_text" />
+
+    </LinearLayout>
+
+</FrameLayout>

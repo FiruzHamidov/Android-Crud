@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Sarvar M</string>
+    <string name="action_settings">Настройки</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Загрузка Постов</string>
+    <string name="second_fragment_label">Добавление пользователя</string>
+    <string name="fragment_put2_label">Изменения данных</string>
+    <string name="next">Загрузка одного поста</string>
+    <string name="save_post">Оправка Post запроса</string>
+    <string name="put_post">Put запрос</string>
+
+    <string name="lorem_ipsum">
+        Загрузка ...
+    </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
