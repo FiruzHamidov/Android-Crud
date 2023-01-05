@@ -18,20 +18,23 @@
         <action
             android:id="@+id/action_FirstFragment_to_PutFragment"
             app:destination="@id/putFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_getOneFragment"
+            app:destination="@id/getOneFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
         android:name="tj.navin.test.SecondFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_second"/>
     <fragment
         android:id="@+id/putFragment"
         android:name="tj.navin.test.PutFragment"
         android:label="@string/fragment_put2_label"
         tools:layout="@layout/fragment_put2" />
+    <fragment
+        android:id="@+id/getOneFragment"
+        android:name="tj.navin.test.GetOneFragment"
+        android:label="@string/fragment_get_one_label"
+        tools:layout="@layout/fragment_get_one" />
 </navigation>

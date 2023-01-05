@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import android.widget.Toast
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
@@ -14,14 +14,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
-import tj.navin.test.databinding.FragmentFirstBinding
+import tj.navin.test.databinding.FragmentGetOneBinding
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class GetOneFragment : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentGetOneBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -32,8 +32,7 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
-
+        _binding = FragmentGetOneBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -41,22 +40,14 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            getMethod()
-        }
+        binding.getButton.setOnClickListener {
+            if (binding.idEditText.text.isEmpty()) {
+                Toast.makeText(activity, "Поле Id обязательное", Toast.LENGTH_SHORT).show()
+            } else {
+                getOneUser()
+            }
 
-        binding.buttonGetOne.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_getOneFragment)
         }
-
-        binding.buttonFirst2.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment2)
-        }
-
-        binding.buttonFirst3.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_PutFragment)
-        }
-
     }
 
     override fun onDestroyView() {
@@ -64,25 +55,24 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 
-    private fun getMethod() {
+    private fun getOneUser() {
 
         binding.resultText.text = "Загрузка..."
 
-        // Create Retrofit
         val retrofit = Retrofit.Builder()
             .baseUrl("https://gorest.co.in")
             .build()
-
 
         val service = retrofit.create(ApiService::class.java)
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val response = service.getUsers()
+            val response = service.getOneUser(binding.idEditText.text.toString())
 
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
 
+                    // Convert raw JSON to pretty JSON using GSON library
                     val gson = GsonBuilder().setPrettyPrinting().create()
                     val prettyJson = gson.toJson(
                         JsonParser.parseString(
@@ -96,7 +86,6 @@ class FirstFragment : Fragment() {
                 } else {
 
                     Log.e("RETROFIT_ERROR", response.code().toString())
-
                     binding.resultText.text = response.code().toString()
 
                 }
