@@ -38,9 +38,10 @@ interface ApiService {
     */
     @Headers("Authorization: Bearer f74dfae196c0543536a7638b5da0e623ce80a351cada7f80ae0611c8b7fe6cca")
     @PUT("/public/v2/users/{Id}")
-    suspend fun updateUser(@Body requestBody: RequestBody): Response<ResponseBody>
-
-
+    suspend fun updateUser(
+        @Path("Id") getById: String,
+        @Body requestBody: RequestBody
+    ): Response<ResponseBody>
 
 
 }

@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import retrofit2.Retrofit
 import tj.navin.test.databinding.FragmentGetOneBinding
 
@@ -82,7 +83,14 @@ class GetOneFragment : Fragment() {
                     )
                     Log.d("Pretty Printed JSON :", prettyJson)
 
-                    binding.resultText.text = prettyJson
+                    val obj = JSONObject(prettyJson)
+
+                    binding.idText.text = "Id: " + obj.getString("id")
+                    binding.nameText.text = "Имя: " +obj.getString("name")
+                    binding.emailText.text = "Эл почта: " + obj.getString("email")
+                    binding.genderText.text = "Пол: " + obj.getString("gender")
+                    binding.statusText.text = "Статус: " + obj.getString("status")
+                    binding.resultText.text = ""
                 } else {
 
                     Log.e("RETROFIT_ERROR", response.code().toString())

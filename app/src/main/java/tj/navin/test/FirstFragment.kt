@@ -57,6 +57,10 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_PutFragment)
         }
 
+        binding.loginButton.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_loginFragment)
+        }
+
     }
 
     override fun onDestroyView() {

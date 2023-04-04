@@ -1,11 +1,13 @@
 package tj.navin.test
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
@@ -16,14 +18,15 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
-import tj.navin.test.databinding.FragmentSecondBinding
+import tj.navin.test.databinding.FragmentPut2Binding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class PutFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentPut2Binding? = null
+    private var result: Boolean = false
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -34,7 +37,7 @@ class PutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentPut2Binding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -43,7 +46,20 @@ class PutFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.postData.setOnClickListener {
-            addUser()
+            if (result) {
+                editUser()
+            } else {
+                Toast.makeText(activity, "Сначала нужно найти пользователя", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        binding.getButton.setOnClickListener {
+            if (binding.idEditText.text.isEmpty()) {
+                Toast.makeText(activity, "Поле Id обязательное", Toast.LENGTH_SHORT).show()
+            } else {
+                getOneUser()
+            }
         }
     }
 
@@ -52,7 +68,7 @@ class PutFragment : Fragment() {
         _binding = null
     }
 
-    private fun addUser() {
+    private fun editUser() {
 
         binding.resultText.text = "Отправка ..."
 
@@ -74,7 +90,7 @@ class PutFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val response = service.updateUser(requestBody)
+            val response = service.updateUser( binding.idEditText.text.toString(), requestBody)
 
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
@@ -94,10 +110,60 @@ class PutFragment : Fragment() {
 
                     Log.e("RETROFIT_ERROR", response.code().toString())
 
-                    binding.resultText.text =  response.code().toString()
+                    binding.resultText.text = response.code().toString()
 
                 }
             }
         }
     }
+
+    private fun getOneUser() {
+
+        binding.resultText.text = "Загрузка..."
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://gorest.co.in")
+            .build()
+
+        val service = retrofit.create(ApiService::class.java)
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val response = service.getOneUser(binding.idEditText.text.toString())
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+
+                    // Convert raw JSON to pretty JSON using GSON library
+                    val gson = GsonBuilder().setPrettyPrinting().create()
+                    val prettyJson = gson.toJson(
+                        JsonParser.parseString(
+                            response.body()
+                                ?.string()
+                        )
+                    )
+                    Log.d("Pretty Printed JSON :", prettyJson)
+
+
+                    val obj = JSONObject(prettyJson)
+
+                    binding.nameEditText.text = obj.getString("name").toEditable()
+                    binding.emailEditText.text = obj.getString("email").toEditable()
+                    binding.genderEditText.text = obj.getString("gender").toEditable()
+                    binding.statusEditText.text = obj.getString("status").toEditable()
+
+                    binding.resultText.text = prettyJson
+
+                    result = true
+                } else {
+
+                    Log.e("RETROFIT_ERROR", response.code().toString())
+                    binding.resultText.text = response.code().toString()
+
+                }
+            }
+        }
+    }
+
+    fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 }

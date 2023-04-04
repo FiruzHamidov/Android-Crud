@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_getOneFragment"
             app:destination="@id/getOneFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -37,4 +40,9 @@
         android:name="tj.navin.test.GetOneFragment"
         android:label="@string/fragment_get_one_label"
         tools:layout="@layout/fragment_get_one" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="tj.navin.test.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

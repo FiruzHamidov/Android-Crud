@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,11 +15,30 @@
         <EditText
             android:layout_marginTop="16dp"
 
+            android:id="@+id/id_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Id">
+
+        </EditText>
+
+        <Button
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Поиск"
+            android:layout_gravity="center"
+            android:id="@+id/get_button"
+            android:layout_marginBottom="32dp"
+            />
+
+        <EditText
+            android:layout_marginTop="16dp"
+
             android:id="@+id/name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="name"
-            android:text="Jack Vorobey">
+            android:hint="name">
 
         </EditText>
 
@@ -29,8 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="email"
-            android:inputType="textEmailAddress"
-            android:text="test@mail.ru">
+            android:inputType="textEmailAddress">
 
         </EditText>
 
@@ -40,9 +59,7 @@
             android:id="@+id/gender_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="gender"
-            android:inputType="textEmailAddress"
-            android:text="female">
+            android:hint="gender">
 
         </EditText>
 
@@ -51,9 +68,7 @@
             android:id="@+id/status_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="status"
-            android:inputType="textEmailAddress"
-            android:text="active">
+            android:hint="status">
 
         </EditText>
 
@@ -61,7 +76,7 @@
             android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Добавить"
+            android:text="Изменить"
             android:layout_gravity="center"
             android:id="@+id/post_data"
             />
@@ -73,4 +88,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>
